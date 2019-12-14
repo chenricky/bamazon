@@ -37,7 +37,17 @@ inquirer.prompt([
     }
 ]).then(function(customerAnswer){
     console.log("you would like to buy " + customerAnswer.howMany + " " + customerAnswer.customerAction);
-}).then(function(updateStock){
     console.log("stock need to be updated");
+
+    //var query = "SELECT * FROM bamazonTable WHERE ?";
+    //var query = "SELECT * FROM bamazonTable";
+
+    connection.query("SELECT * FROM bamazonTable WHERE item_Name=?", [customerAnswer.customerAction], function(err, res) {
+        for (var i=0; i < res.length; i++){
+        console.log("stock before your purchase: " + res[i].stock + " , stock after your purchase: " + (res[i].stock-1));
+        }
+      });
 })
+
+
 })
