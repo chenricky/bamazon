@@ -26,7 +26,7 @@ var itemArrayDisplay=[];
 var itemArrayChoice=[];
 
 for (var i=0; i<res.length; i++){
-itemArrayDisplay.push("Item: " + res[i].id + "     Name: " + res[i].item_Name + "     price: $"+ res[i].price+ "     Original Stock: "+ res[i].stock + "     Cusotmer purchases: " + res[i].purchase);
+itemArrayDisplay.push("Item: " + res[i].id + "     Name: " + res[i].item_Name + "     price: $"+ res[i].price+ "     Original Stock: "+ res[i].stock + "     Most recent Cusotmer purchases: " + res[i].purchase);
 itemArrayChoice.push(res[i].item_Name);
 
 }
@@ -66,6 +66,20 @@ inquirer.prompt([
             for (var i=0; i<res.length; i++){
                 if (customerAnswer.customerAction === res[i].item_Name) {
                     console.log("current " + res[i].item_Name + " purchase is: " + res[i].purchase);
+
+                    connection.query(
+                    "UPDATE bamazonTable SET ? WHERE ?",
+                    [
+                    {
+                        stock: res[i].stock - res[i].purchase
+                    },
+                    {
+                        item_Name: customerAnswer.customerAction
+                    }
+                    ]
+                    )
+
+
                 }
             }
 
