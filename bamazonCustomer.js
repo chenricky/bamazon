@@ -26,7 +26,7 @@ var itemArrayDisplay=[];
 var itemArrayChoice=[];
 
 for (var i=0; i<res.length; i++){
-itemArrayDisplay.push("Item: " + res[i].id + "     Name: " + res[i].item_Name + "     price: $"+ res[i].price+ "     Original Stock: "+ res[i].stock + "     Most recent Cusotmer purchases: " + res[i].purchase);
+itemArrayDisplay.push("Item: " + res[i].id + "     Name: " + res[i].item_Name + "     price: $"+ res[i].price+ "     Current Stock: "+ res[i].stock + "     Most recent Cusotmer purchases: " + res[i].purchase);
 itemArrayChoice.push(res[i].item_Name);
 
 }
@@ -78,7 +78,6 @@ inquirer.prompt([
                     }
                     ]
                     )
-
 
                 }
             }
