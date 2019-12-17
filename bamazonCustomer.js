@@ -11,8 +11,15 @@ var connection = mysql.createConnection({
 var inquirer = require("inquirer");
 var customerAnswer;
 
+connection.connect(function(err) {
+  if (err) throw err;
+  cusotmerQuestion();
+  connection.end();
+});
+
 
 //-------------------------------------------------------------------------------------
+function cusotmerQuestion() {
 connection.query("SELECT * FROM bamazonTable", function(err, res) {
 
 var itemArrayDisplay=[];
@@ -40,7 +47,7 @@ inquirer.prompt([
     }
 ]).then(function(customerAnswer){
     console.log("you would like to buy " + customerAnswer.howMany + " " + customerAnswer.customerAction);
-    console.log("stock need to be updated");
+    console.log("purchase completed. stock is updated");
     connection.query(
     "UPDATE bamazonTable SET ? WHERE ?",
     [
@@ -59,9 +66,16 @@ inquirer.prompt([
       }
       );
 })
+}
 //-------------------------------------------------------------------------------------
 
-
+function afterConnection() {
+  connection.query("SELECT * FROM bamazonTable", function(err, res) {
+    if (err) throw err;
+    console.log(res);
+    connection.end();
+  });
+}
 
 //updateStock();
 //}
