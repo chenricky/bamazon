@@ -9,14 +9,17 @@ var connection = mysql.createConnection({
 });
 
 var inquirer = require("inquirer");
+var customerAnswer;
 
+
+//-------------------------------------------------------------------------------------
 connection.query("SELECT * FROM bamazonTable", function(err, res) {
 
 var itemArrayDisplay=[];
 var itemArrayChoice=[];
 
 for (var i=0; i<res.length; i++){
-itemArrayDisplay.push("Item: " + res[i].item_ID + "     Name: " + res[i].item_Name + "     Sell Department: " + res[i].department_Name + "     price: $"+ res[i].price+ "     Stock: "+ res[i].stock);
+itemArrayDisplay.push("Item: " + res[i].id + "     Name: " + res[i].item_Name + "     price: $"+ res[i].price+ "     Original Stock: "+ res[i].stock + "     Cusotmer purchases: " + res[i].purchase);
 itemArrayChoice.push(res[i].item_Name);
 
 }
@@ -38,16 +41,51 @@ inquirer.prompt([
 ]).then(function(customerAnswer){
     console.log("you would like to buy " + customerAnswer.howMany + " " + customerAnswer.customerAction);
     console.log("stock need to be updated");
+    connection.query(
+    "UPDATE bamazonTable SET ? WHERE ?",
+    [
+     {
+        purchase: customerAnswer.howMany
+     },
+     {
+        item_Name: customerAnswer.customerAction
+     }
+    ],
+    function() {
 
-    //var query = "SELECT * FROM bamazonTable WHERE ?";
-    //var query = "SELECT * FROM bamazonTable";
 
-    connection.query("SELECT * FROM bamazonTable WHERE item_Name=?", [customerAnswer.customerAction], function(err, res) {
-        for (var i=0; i < res.length; i++){
-        console.log("stock before your purchase: " + res[i].stock + " , stock after your purchase: " + (res[i].stock-1));
-        }
-      });
+            }
+    );
+      }
+      );
 })
+//-------------------------------------------------------------------------------------
 
 
-})
+
+//updateStock();
+//}
+
+//updateStock();
+
+//})
+
+//function updateStock() {
+//    connection.query(
+//    "UPDATE bamazonTable SET ? WHERE ?",
+//    [
+//     {
+//        stock: customerAnswer.howMany
+//     },
+//     {
+//        id: customerAnswer.id
+//     }
+//    ],
+//    function(error) {
+//              if (error) throw err;
+//              console.log("there is an error!");
+//              //start();
+//            }
+//
+//    )
+//}
