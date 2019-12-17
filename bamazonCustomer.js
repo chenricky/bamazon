@@ -26,7 +26,7 @@ var itemArrayDisplay=[];
 var itemArrayChoice=[];
 
 for (var i=0; i<res.length; i++){
-itemArrayDisplay.push("Item: " + res[i].id + "     Name: " + res[i].item_Name + "     price: $"+ res[i].price+ "     Current Stock: "+ res[i].stock + "     Most recent Cusotmer purchases: " + res[i].purchase);
+itemArrayDisplay.push("Item: " + res[i].id + "     Name: " + res[i].item_Name + "     price: $"+ res[i].price+ "     Current Stock: "+ res[i].stock);
 itemArrayChoice.push(res[i].item_Name);
 
 }
@@ -53,7 +53,7 @@ inquirer.prompt([
     "UPDATE bamazonTable SET ? WHERE ?",
     [
      {
-        purchase: customerAnswer.howMany
+        recent_purchase: customerAnswer.howMany
      },
      {
         item_Name: customerAnswer.customerAction
@@ -65,13 +65,13 @@ inquirer.prompt([
 
             for (var i=0; i<res.length; i++){
                 if (customerAnswer.customerAction === res[i].item_Name) {
-                    console.log("current " + res[i].item_Name + " purchase is: " + res[i].purchase);
+                    console.log("current " + res[i].item_Name + " purchase is: " + res[i].recent_purchase);
 
                     connection.query(
                     "UPDATE bamazonTable SET ? WHERE ?",
                     [
                     {
-                        stock: res[i].stock - res[i].purchase
+                        stock: res[i].stock - res[i].recent_purchase
                     },
                     {
                         item_Name: customerAnswer.customerAction
@@ -90,6 +90,8 @@ inquirer.prompt([
 })
 }
 //-------------------------------------------------------------------------------------
+
+
 
 function afterConnection() {
   connection.query("SELECT * FROM bamazonTable", function(err, res) {
