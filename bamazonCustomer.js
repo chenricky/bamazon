@@ -13,13 +13,13 @@ var customerAnswer;
 
 connection.connect(function(err) {
   if (err) throw err;
-  cusotmerQuestion();
-  connection.end();
+  customerQuestion();
+  //connection.end();
 });
 
 
 //-------------------------------------------------------------------------------------
-function cusotmerQuestion() {
+function customerQuestion() {
 connection.query("SELECT * FROM bamazonTable", function(err, res) {
 
 var itemArrayDisplay=[];
@@ -48,6 +48,7 @@ inquirer.prompt([
 ]).then(function(customerAnswer){
     console.log("you would like to buy " + customerAnswer.howMany + " " + customerAnswer.customerAction);
     console.log("purchase completed. stock is updated");
+    //console.log(customerAnswer);
     connection.query(
     "UPDATE bamazonTable SET ? WHERE ?",
     [
@@ -59,9 +60,17 @@ inquirer.prompt([
      }
     ],
     function() {
+            connection.query("SELECT * FROM bamazonTable", function(err, res){
+            //console.log(res);
 
-
+            for (var i=0; i<res.length; i++){
+                if (customerAnswer.customerAction === res[i].item_Name) {
+                    console.log("current " + res[i].item_Name + " purchase is: " + res[i].purchase);
+                }
             }
+
+            })
+        }
     );
       }
       );
