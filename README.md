@@ -1,7 +1,7 @@
 # bamazon
 
 # mysql table
-![mysql](./bamazon_mysql_low_480.gif)
+![mysql](./mysql-640-std.gif)
 
 # node js cli for customer view
-![bamazonCustomer](./bamazon_node_low_480.gif)
+![bamazonCustomer](./node-640-std.gif)
