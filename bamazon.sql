@@ -22,7 +22,7 @@ INSERT INTO bamazonTable (item_Name, department_Name, stock, recent_purchase, pr
 VALUES ("book_2", "Book store", 150, 0, 10);
 
 INSERT INTO bamazonTable (item_Name, department_Name, stock, recent_purchase, price)
-VALUES ("car_1", "Car dealer", 10, 0, 35000);
+VALUES (" car_1", "Car dealer", 10, 0, 35000);
 
 INSERT INTO bamazonTable (item_Name, department_Name, stock, recent_purchase, price)
-VALUES ("car_2", "Car dealer", 25, 0, 25000);
+VALUES (" car_2", "Car dealer", 25, 0, 25000);
